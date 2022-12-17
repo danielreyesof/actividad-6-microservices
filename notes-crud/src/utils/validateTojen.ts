@@ -1,30 +1,18 @@
-import http from 'http';
-
-const options = {
-  hostname: 'https://act6micro.up.railway.app',
-  path: '/api/auth/verifytoken',
-  method: 'POST',
-  headers: {},
-};
+import fetch, { Request } from 'cross-fetch';
 
 const makeCall = (token: string) => {
   if (token === null) throw new Error('No token provided');
 
-  options.headers = { Authorization: token };
-
   return new Promise((resolve, reject) => {
-    const req = http.request(options, (res) => {
-      res.setEncoding('utf8');
-      res.on('data', (d) => {
-        resolve(JSON.parse(d));
-      });
+    const options = new Request('https://act6auth.up.railway.app/api/auth/verifytoken', {
+      method: 'GET',
+      headers: { Authorization: token },
     });
 
-    req.on('error', (e) => {
-      reject(e);
-    });
-
-    req.end();
+    fetch(options)
+      .then((response) => response.json())
+      .then((data) => resolve(data))
+      .catch((err) => reject(err));
   });
 };
 export default makeCall;
