@@ -1,8 +1,7 @@
 import http from 'http';
 
 const options = {
-  hostname: 'localhost',
-  port: 3000,
+  hostname: 'https://act6micro.up.railway.app',
   path: '/api/auth/verifytoken',
   method: 'POST',
   headers: {},
