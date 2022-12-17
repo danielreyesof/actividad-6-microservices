@@ -43,6 +43,9 @@ const config_1 = __importDefault(require("../config"));
 const BlacklistToken_1 = __importDefault(require("../models/BlacklistToken"));
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, username, email, email_verified_at, password, imgURL, platform, push_token, roles } = req.body;
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!regex.test(email))
+        return res.status(400).json({ message: 'Correo electronico invalido.' });
     const newUser = new User_1.default({
         name,
         username,
@@ -65,16 +68,16 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = jsonwebtoken_1.default.sign({ id: savedUser._id }, config_1.default.secret, {
         expiresIn: 86400,
     });
-    res.status(200).json({ status: 201, token });
+    res.status(200).json({ status: 201, token, message: 'Usuario creado correctamente.' });
 });
 exports.signup = signup;
 const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userFound = yield User_1.default.findOne({ email: req.body.email }).populate('roles');
     if (!userFound)
-        return res.status(400).json({ message: 'Incorrect email or password' });
+        return res.status(400).json({ message: 'Correo electrónico o contraseña incorrecta.' });
     const matchPassword = yield (0, User_1.comparePassword)(req.body.password, userFound.password);
     if (!matchPassword)
-        return res.status(401).json({ token: null, message: 'Incorrect email or password' });
+        return res.status(401).json({ token: null, message: 'Correo electrónico o contraseña incorrecta.' });
     const token = jsonwebtoken_1.default.sign({ id: userFound._id }, config_1.default.secret, {
         expiresIn: 86400,
     });
@@ -87,6 +90,6 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         token,
     });
     yield newBlToken.save();
-    res.status(200).json({ status: 200, message: 'Session ended' });
+    res.status(200).json({ status: 200, message: 'Sesión terminada correctamente.' });
 });
 exports.logout = logout;

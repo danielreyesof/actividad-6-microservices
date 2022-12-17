@@ -29,6 +29,6 @@ const authCtrl = __importStar(require("../controllers/auth.controller"));
 const index_1 = require("../middlewares/index");
 router.post("/signup", [index_1.verifySignup.checkDuplicatedUsernameOrEmail, index_1.verifySignup.checkRolesExisted], authCtrl.signup);
 router.post("/signin", authCtrl.signin);
-router.post("/logout", authCtrl.logout);
-router.post("/verifytoken", index_1.authJwt.verifyToken);
+router.get("/logout", authCtrl.logout);
+router.get("/verifytoken", index_1.authJwt.verifyToken);
 exports.default = router;

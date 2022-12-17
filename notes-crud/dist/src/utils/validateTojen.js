@@ -5,8 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = __importDefault(require("http"));
 const options = {
-    hostname: 'localhost',
-    port: 3000,
+    hostname: 'https://act6micro.up.railway.app',
     path: '/api/auth/verifytoken',
     method: 'POST',
     headers: {},

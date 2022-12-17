@@ -28,6 +28,6 @@ const router = (0, express_1.Router)();
 const noteCtrl = __importStar(require("../controllers/notes.controller"));
 router.post('/create', noteCtrl.addNote);
 router.patch('/update', noteCtrl.updateNote);
-router.get('/get-notes', noteCtrl.getNoteByUser);
+router.get('/get', noteCtrl.getNoteByUser);
 router.delete('/delete', noteCtrl.deleteNote);
 exports.default = router;
