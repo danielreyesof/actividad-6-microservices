@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteNote = exports.getNoteByUser = exports.updateNote = exports.addNote = void 0;
+exports.deleteNote = exports.getNoteById = exports.getNoteByUser = exports.updateNote = exports.addNote = void 0;
 const Note_1 = __importDefault(require("../models/Note"));
 const validateTojen_1 = __importDefault(require("../utils/validateTojen"));
 const addNote = ({ body, headers }, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,6 +42,15 @@ const getNoteByUser = ({ headers }, res) => __awaiter(void 0, void 0, void 0, fu
     res.status(200).json({ status: 201, response });
 });
 exports.getNoteByUser = getNoteByUser;
+const getNoteById = ({ headers, params }, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { status, message } = yield (0, validateTojen_1.default)(headers.authorization);
+    if (status !== 200)
+        return new Error(message);
+    console.log(params.id);
+    let response = yield Note_1.default.find({ _id: params.id, status: 1 });
+    res.status(200).json({ status: 201, response });
+});
+exports.getNoteById = getNoteById;
 const deleteNote = ({ body, headers }, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { status, message, user } = yield (0, validateTojen_1.default)(headers.authorization);
     if (status !== 200)
