@@ -40,6 +40,19 @@ export const getNoteByUser = async ({ headers }: any, res: any) => {
   res.status(200).json({ status: 201, response });
 };
 
+export const getNoteById = async ({ headers, params }: any, res: any) => {
+  const { status, message }: any = await makeCall(headers.authorization);
+
+  if (status !== 200) return new Error(message);
+
+  console.log(params.id);
+  
+
+  let response = await Note.find({ _id: params.id, status: 1 });
+
+  res.status(200).json({ status: 201, response });
+};
+
 export const deleteNote = async ({ body, headers }: any, res: any) => {
   const { status, message, user }: any = await makeCall(headers.authorization);
 
