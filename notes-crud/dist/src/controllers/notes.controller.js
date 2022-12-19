@@ -51,11 +51,11 @@ const getNoteById = ({ headers, params }, res) => __awaiter(void 0, void 0, void
     res.status(200).json({ status: 201, response });
 });
 exports.getNoteById = getNoteById;
-const deleteNote = ({ body, headers }, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteNote = ({ params, headers }, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { status, message, user } = yield (0, validateTojen_1.default)(headers.authorization);
     if (status !== 200)
         return new Error(message);
-    const deleteNote = yield Note_1.default.findByIdAndRemove(body._id);
+    const deleteNote = yield Note_1.default.findByIdAndRemove(params.id);
     res.status(200).json({ status: 201, deleteNote });
 });
 exports.deleteNote = deleteNote;

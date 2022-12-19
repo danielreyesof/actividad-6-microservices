@@ -46,19 +46,18 @@ export const getNoteById = async ({ headers, params }: any, res: any) => {
   if (status !== 200) return new Error(message);
 
   console.log(params.id);
-  
 
   let response = await Note.find({ _id: params.id, status: 1 });
 
   res.status(200).json({ status: 201, response });
 };
 
-export const deleteNote = async ({ body, headers }: any, res: any) => {
+export const deleteNote = async ({ params, headers }: any, res: any) => {
   const { status, message, user }: any = await makeCall(headers.authorization);
 
   if (status !== 200) return new Error(message);
 
-  const deleteNote: any = await Note.findByIdAndRemove(body._id);
+  const deleteNote: any = await Note.findByIdAndRemove(params.id);
 
   res.status(200).json({ status: 201, deleteNote });
 };

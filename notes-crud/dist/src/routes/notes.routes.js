@@ -30,5 +30,5 @@ router.post('/create', noteCtrl.addNote);
 router.patch('/update', noteCtrl.updateNote);
 router.get('/get', noteCtrl.getNoteByUser);
 router.get('/get/:id', noteCtrl.getNoteById);
-router.delete('/delete', noteCtrl.deleteNote);
+router.delete('/delete/:id', noteCtrl.deleteNote);
 exports.default = router;
